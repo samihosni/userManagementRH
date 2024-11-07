@@ -25,4 +25,5 @@ public class TimeSheet {
 
     private LocalDate date;
     private Integer hoursWorked;
+    private Boolean validated = false;
 }
