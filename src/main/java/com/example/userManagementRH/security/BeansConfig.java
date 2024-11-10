@@ -1,8 +1,15 @@
 package com.example.userManagementRH.security;
 
+import com.example.userManagementRH.entities.ERole;
+import com.example.userManagementRH.entities.Role;
+import com.example.userManagementRH.repositories.RoleRepo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -32,5 +39,25 @@ public class BeansConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return  new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CommandLineRunner initializeRoles(RoleRepo roleRepository) {
+        return args -> {
+            for (ERole role : ERole.values()) {
+                // Check if the role exists in the DB, otherwise create it
+                roleRepository.findByName(role).orElseGet(() -> {
+                    Role newRole = Role.builder().name(role).build();
+                    return roleRepository.save(newRole);
+                });
+            }
+        };
+    }
+    @Bean
+    @Primary
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());  // Register the JavaTimeModule
+        return objectMapper;
     }
 }

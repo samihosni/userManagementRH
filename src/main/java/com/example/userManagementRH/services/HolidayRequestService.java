@@ -21,7 +21,7 @@ public class HolidayRequestService {
     public HolidayRequest createLeaveRequest(HolidayRequest holidayRequest, MultipartFile file) throws IOException {
         // Gérer l'enregistrement du fichier
         String fileName = file.getOriginalFilename();
-        String filePath = "uploads/" + fileName;  // Définit un chemin d'enregistrement
+        String filePath = "C:/Users/samyh/AppData/Local/Temp/tomcat.8080.5670449873128658975/work/Tomcat/localhost/ROOT/uploads/" + fileName;  // Définit un chemin d'enregistrement
 
         // Enregistrez le fichier sur le système de fichiers
         Path path = Paths.get(filePath);

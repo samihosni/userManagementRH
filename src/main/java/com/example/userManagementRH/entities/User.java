@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Setter
+@Table(name = "Users")
 public class User implements UserDetails, Principal {
     @Id
     @GeneratedValue

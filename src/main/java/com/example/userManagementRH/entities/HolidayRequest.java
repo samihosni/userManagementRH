@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Date;
+
 
 @Entity
 @Getter
@@ -22,8 +24,8 @@ public class HolidayRequest {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
     private String status;
     private String filePath;
 

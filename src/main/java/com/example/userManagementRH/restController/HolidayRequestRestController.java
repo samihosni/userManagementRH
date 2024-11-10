@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,38 +16,56 @@ import java.util.List;
 @RequestMapping("/holidayRequest")
 @RequiredArgsConstructor
 public class HolidayRequestRestController {
+
     @Autowired
     private HolidayRequestService holidayRequestService;
 
+    /**
+     * Endpoint to create a new holiday request with a file upload.
+     */
     @PostMapping("/add")
     public ResponseEntity<HolidayRequest> createLeaveRequest(
-            @RequestParam("holidayRequest") String holidayRequestJson,
-            @RequestParam("file") MultipartFile file) throws IOException {
-        // Convertissez holidayRequestJson en un objet HolidayRequest
-        // Vous pouvez utiliser un convertisseur JSON, comme Jackson ou Gson
+            @RequestParam("holidayRequest") String holidayRequestJson,  // Expecting JSON string
+            @RequestParam("file") MultipartFile file) throws IOException {  // Expecting a file
+
+        // Convert the JSON string to a HolidayRequest object
         HolidayRequest holidayRequest = new ObjectMapper().readValue(holidayRequestJson, HolidayRequest.class);
 
-        // Appelez la méthode du service pour traiter la demande de congé et le fichier
+        // Pass the HolidayRequest and file to the service to handle the business logic
         HolidayRequest createdRequest = holidayRequestService.createLeaveRequest(holidayRequest, file);
 
+        // Return the created request as a response
         return ResponseEntity.ok(createdRequest);
     }
 
+    /**
+     * Endpoint to get all holiday requests.
+     */
     @GetMapping("/all")
     public List<HolidayRequest> getAllLeaveRequests() {
         return holidayRequestService.getAllLeaveRequests();
     }
 
+    /**
+     * Endpoint to update a holiday request.
+     */
     @PutMapping("/update/{id}")
-    public ResponseEntity<HolidayRequest> updateLeaveRequest(@PathVariable Long id, @RequestBody HolidayRequest updatedLeave) {
+    public ResponseEntity<HolidayRequest> updateLeaveRequest(
+            @PathVariable Long id, @RequestBody HolidayRequest updatedLeave) {
         return ResponseEntity.ok(holidayRequestService.updateLeaveRequest(id, updatedLeave));
     }
 
+    /**
+     * Endpoint to approve a holiday request.
+     */
     @PutMapping("/{id}/approve")
     public ResponseEntity<HolidayRequest> approveLeaveRequest(@PathVariable Long id) {
         return ResponseEntity.ok(holidayRequestService.approveLeaveRequest(id));
     }
 
+    /**
+     * Endpoint to delete a holiday request.
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteLeaveRequest(@PathVariable Long id) {
         holidayRequestService.deleteLeaveRequest(id);
