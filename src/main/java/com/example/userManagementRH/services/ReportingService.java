@@ -26,7 +26,7 @@ public class ReportingService {
     public Map<String, Long> getLeaveCountPerEmployee() {
         return holidayRequestRepo.findAll().stream()
                 .collect(Collectors.groupingBy(
-                        leave -> leave.getUser().getUsername(),
+                        leave -> leave.getUser().fullName(),
                         Collectors.counting()
                 ));
     }
@@ -34,7 +34,7 @@ public class ReportingService {
     public Map<String, Double> getAveragePerformanceScores() {
         return evaluationRepo.findAll().stream()
                 .collect(Collectors.groupingBy(
-                        eval -> eval.getUser().getUsername(),
+                        eval -> eval.getUser().fullName(),
                         Collectors.averagingInt(Evaluation::getScore)
                 ));
     }
@@ -42,7 +42,7 @@ public class ReportingService {
     public Map<String, Integer> getTotalHoursWorked() {
         return timeSheetRepo.findAll().stream()
                 .collect(Collectors.groupingBy(
-                        ts -> ts.getUser().getUsername(),
+                        ts -> ts.getUser().fullName(),
                         Collectors.summingInt(TimeSheet::getHoursWorked)
                 ));
     }
