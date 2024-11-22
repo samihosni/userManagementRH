@@ -11,6 +11,12 @@ import java.util.List;
 import java.util.Optional;
 public interface UserRepo extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
+
     @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name IN :roleNames")
     List<User> findUsersByRoles(@Param("roleNames") List<ERole> roleNames);
+
+
+    @Query("SELECT u FROM User u JOIN FETCH u.roles")
+    List<User> findAllUsersWithRoles();
+
 }

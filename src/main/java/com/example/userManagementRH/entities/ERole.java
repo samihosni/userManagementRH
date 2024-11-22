@@ -1,6 +1,8 @@
 package com.example.userManagementRH.entities;
 
 import com.example.userManagementRH.authentication.Permission;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
@@ -28,5 +30,20 @@ public enum ERole {
                 .collect(Collectors.toSet());
         permissions.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
         return permissions;
+    }
+
+    @JsonCreator
+    public static ERole fromString(String value) {
+        for (ERole role : ERole.values()) {
+            if (role.name().equalsIgnoreCase(value)) {
+                return role;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant " + ERole.class.getCanonicalName() + "." + value);
+    }
+
+    @JsonValue
+    public String toValue() {
+        return name();
     }
 }

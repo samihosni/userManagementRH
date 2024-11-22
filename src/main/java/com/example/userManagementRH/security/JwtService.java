@@ -17,7 +17,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    private long jwtExpiration = 8640000;
+    private long jwtExpiration = 5000 * 60 * 60 * 24;
     private String secretKey = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
     // Interpreter le username du token
 
@@ -46,6 +46,7 @@ public class JwtService {
             UserDetails userDetails,
             long jwtExpiration)
     {
+        System.out.println(System.currentTimeMillis());
         var authorities=userDetails.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)

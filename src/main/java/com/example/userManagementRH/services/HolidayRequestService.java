@@ -21,16 +21,16 @@ public class HolidayRequestService {
     public HolidayRequest createLeaveRequest(HolidayRequest holidayRequest, MultipartFile file) throws IOException {
         // Gérer l'enregistrement du fichier
         String fileName = file.getOriginalFilename();
-        String filePath = "C:/Users/samyh/AppData/Local/Temp/tomcat.8080.5670449873128658975/work/Tomcat/localhost/ROOT/uploads/" + fileName;  // Définit un chemin d'enregistrement
+        String filePath = "C:/Users/21650/Documents/tekup" + fileName;
 
         // Enregistrez le fichier sur le système de fichiers
         Path path = Paths.get(filePath);
-        Files.createDirectories(path.getParent());  // Crée les répertoires si nécessaire
-        file.transferTo(path.toFile());  // Sauvegarde le fichier
+        Files.createDirectories(path.getParent());
+        file.transferTo(path.toFile());
 
-        holidayRequest.setFilePath(filePath);  // Mettez à jour le chemin du fichier dans l'entité
+        holidayRequest.setFilePath(filePath);
 
-        return holidayRequestRepo.save(holidayRequest);  // Enregistrez la demande de congé
+        return holidayRequestRepo.save(holidayRequest);
     }
 
     public List<HolidayRequest> getAllLeaveRequests() {

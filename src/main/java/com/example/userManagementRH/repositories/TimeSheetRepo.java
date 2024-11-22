@@ -7,7 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface TimeSheetRepo extends JpaRepository<TimeSheet, Long> {
     List<TimeSheet> findByUserIdAndDate(Long userId, LocalDate date);
+    List<TimeSheet> findByUserId(Long userId);
+
 }

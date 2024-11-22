@@ -26,6 +26,7 @@ public class HolidayRequest {
 
     private Date startDate;
     private Date endDate;
+    private String reason;
     private String status;
     private String filePath;
 

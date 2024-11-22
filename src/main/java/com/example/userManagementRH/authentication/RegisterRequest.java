@@ -1,8 +1,10 @@
 package com.example.userManagementRH.authentication;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import jakarta.validation.constraints.*;
 
+import java.time.LocalDateTime;
 
 
 @Builder
@@ -10,7 +12,9 @@ import jakarta.validation.constraints.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RegisterRequest {
+    private Long id;
     @NotEmpty(message = "Firstname is mandatory")
     @NotBlank(message = "Firstname is mandatory")
     private String firstname;
@@ -28,4 +32,13 @@ public class RegisterRequest {
     @NotEmpty(message = "Role is mandatory")
     @NotBlank(message = "Role is mandatory")
     private String role;
+
+    @NotEmpty(message = "Phone is mandatory")
+    @NotBlank(message = "Phone is mandatory")
+    private String phone;
+
+
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
+
 }

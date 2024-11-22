@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TimeSheetService {
@@ -22,6 +24,12 @@ public class TimeSheetService {
         return timeSheetRepo.findAll();
     }
 
+    public List<TimeSheet> getTimeSheetsByUserId(Long userId) {
+        return timeSheetRepo.findByUserId(userId);
+    }
+
+
+
     public TimeSheet updateTimesheet(Long id, TimeSheet updatedTimesheet) {
         return timeSheetRepo.findById(id).map(timesheet -> {
             timesheet.setHoursWorked(updatedTimesheet.getHoursWorked());
@@ -30,7 +38,7 @@ public class TimeSheetService {
         }).orElseThrow(() -> new RuntimeException("Timesheet not found"));
     }
 
-    @PreAuthorize("hasRole('HR')")
+    @PreAuthorize("hasRole('HR') || hasRole('ADMIN') ")
     public TimeSheet validateTimesheet(Long id) {
         TimeSheet timesheet = timeSheetRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Timesheet not found"));

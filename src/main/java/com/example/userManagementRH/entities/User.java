@@ -29,6 +29,7 @@ public class User implements UserDetails, Principal {
 
     private String firstname;
     private String lastname;
+    private String phone;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -93,4 +94,48 @@ public class User implements UserDetails, Principal {
     public String getName() {
         return email;
     }
+////////////////////////////////////////
+
+    /*public Long getId() { return id; }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }*/
 }
